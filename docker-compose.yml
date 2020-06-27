@@ -1,0 +1,22 @@
+version: '3'
+services:
+  nginx:
+    image: nginx:stable
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - "./conf.d:/etc/nginx/conf.d"
+    depends_on:
+      - express
+
+  express:
+    image: node:14.4.0-alpine
+    container_name: express
+    hostname: express
+    volumes:
+      - ".:/src"
+    working_dir: /src
+    command: [sh, -c, npm install && npm run build && npm run dev]
+    ports:
+      - "3000:3000"
