@@ -77,6 +77,29 @@ paths:
               schema:
                 $ref: '#/components/schemas/Card'
 
+    put:
+      summary: Updata a card Infomation
+      description: Update a card Infomation
+      tags:
+        - cards
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Card'
+            examples:
+              card:
+                id: 1
+                word: LGTM
+                explanation: Looks Good To Me
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Card'
+
 components:
   schemas:
     Card:
