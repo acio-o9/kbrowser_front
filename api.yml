@@ -1,0 +1,12 @@
+openapi: 3.0.0
+
+info:
+  title: Knowledge Browser
+  description: "This product can share cards: Word-Explanation lists for learning new knowledge.
+    If you get new knowledge, write a card on `Knowledge Browser`.
+    The card is checked by another member, add to card lists with member agreement.
+    All member using `Knowledge Browser` meets the card someday."
+  contact:
+    name: acio-o9
+    url: https://github.com/acio-o9
+  version: 1.0.0
