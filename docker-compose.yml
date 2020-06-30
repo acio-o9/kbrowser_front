@@ -20,3 +20,19 @@ services:
     command: [sh, -c, npm install && npm run build && npm run dev]
     ports:
       - "3000:3000"
+
+  swagger-editor:
+    image: swaggerapi/swagger-editor
+    container_name: swagger-editor
+    ports:
+      - "8001:8080"
+
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    container_name: swagger-ui
+    ports:
+      - "8002:8080"
+    volumes:
+      - "./api.yml:/api.yml"
+    environment:
+      SWAGGER_JSON: /api.yml

@@ -1,0 +1,130 @@
+openapi: 3.0.0
+
+info:
+  title: Knowledge Browser
+  description: "This product can share cards: Word-Explanation lists for learning new knowledge.
+    If you get new knowledge, write a card on `Knowledge Browser`.
+    The card is checked by another member, add to card lists with member agreement.
+    All member using `Knowledge Browser` meets the card someday."
+  contact:
+    name: acio-o9
+    url: https://github.com/acio-o9
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8081
+    description: Development server
+
+paths:
+  /cards:
+    get:
+      summary: List all Cards.
+      description: Returns an array of Card model
+      tags:
+        - cards
+      responses:
+        '200':
+          description: A JSON array of Card model
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Card'
+                example:
+                  - id: 1
+                    word: LGTM
+                    explanation: Looks Good To Me
+                  - id: 2
+                    word: YAGNI
+                    explanation: You ain't gonna need it
+    post:
+      summary: Create a Card
+      description: Create new Card
+      tags:
+        - cards
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Card'
+            examples:
+              card:
+                word: LGTM
+                explanation: Looks Good To Me
+      responses:
+        '201':
+          description: CREATED
+
+  /cards/{cardId}:
+    get:
+      summary: Info for a specific card
+      description: Returns a single Card model
+      tags:
+        - cards
+      parameters:
+        - name: cardId
+          in: path
+          required: true
+          description: The id of the card to retrieve
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Card'
+
+    put:
+      summary: Updata a card Infomation
+      description: Update a card Infomation
+      tags:
+        - cards
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Card'
+            examples:
+              card:
+                id: 1
+                word: LGTM
+                explanation: Looks Good To Me
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Card'
+
+    delete:
+      summary: Delete a card
+      description: Process to delete a card
+      tags:
+        - cards
+      parameters:
+        - name: cardId
+          in: path
+          required: true
+          description: The id of the card to retrieve
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Expected response to a valid request
+
+components:
+  schemas:
+    Card:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        word:
+          type: string
+        explanation:
+          type: string
