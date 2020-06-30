@@ -38,6 +38,23 @@ paths:
                   - id: 2
                     word: YAGNI
                     explanation: You ain't gonna need it
+    post:
+      summary: Create a Card
+      description: Create new Card
+      tags:
+        - cards
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Card'
+            examples:
+              card:
+                word: LGTM
+                explanation: Looks Good To Me
+      responses:
+        '201':
+          description: CREATED
 
   /cards/{cardId}:
     get:
