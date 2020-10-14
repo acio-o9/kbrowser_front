@@ -1,8 +1,13 @@
-import { FC } from 'react'
+import React from 'react'
 import Head from 'next/head'
 import styles from '../../styles/Home.module.css'
 
-const Home: FC = () => {
+type ContainerProps = unknown
+type Props = unknown & ContainerProps
+
+const Component: React.FC<Props> = props => {
+  // Component内では渡されたpropsを使うだけ
+  console.log(props)
   return (
     <div className={styles.container}>
       <Head>
@@ -65,4 +70,11 @@ const Home: FC = () => {
   )
 }
 
-export default Home
+const Container: React.FC<ContainerProps> = props => {
+  // 値の取得や、整形、stateの生成などのロジックをContainer内に閉じ込められる
+  return <Component {...props} />
+}
+
+Container.displayName = 'Home'
+
+export default Container
