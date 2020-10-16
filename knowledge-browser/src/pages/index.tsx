@@ -1,54 +1,39 @@
-import React from 'react'
+import React, { useReducer } from 'react'
 import Layout from '../components/layout'
 import styles from '../../styles/Home.module.css'
 
 type ContainerProps = unknown
-type Props = unknown & ContainerProps
+
+type Props = {
+  count: number
+  counter: (CounterAction) => void
+} & ContainerProps
+
+type Count = { count: number }
+type CounterAction = { type: 'INCREMENT' | 'DECREMENT' }
 
 const Component: React.FC<Props> = props => {
   // Component内では渡されたpropsを使うだけ
-  console.log(props)
   return (
     <Layout>
       <div className={styles.container}>
         <main className={styles.main}>
           <h1 className={styles.title}>
-            Welcome to <a href="https://nextjs.org">Next.js!</a>
+            Counter!!
           </h1>
 
-          <p className={styles.description}>
-            Get started by editing{' '}
-            <code className={styles.code}>pages/index.js</code>
-          </p>
-
           <div className={styles.grid}>
-            <a href="https://nextjs.org/docs" className={styles.card}>
-              <h3>Documentation &rarr;</h3>
-              <p>Find in-depth information about Next.js features and API.</p>
-            </a>
-
-            <a href="https://nextjs.org/learn" className={styles.card}>
-              <h3>Learn &rarr;</h3>
-              <p>Learn about Next.js in an interactive course with quizzes!</p>
-            </a>
-
-            <a
-              href="https://github.com/vercel/next.js/tree/master/examples"
-              className={styles.card}
-            >
-              <h3>Examples &rarr;</h3>
-              <p>Discover and deploy boilerplate example Next.js projects.</p>
-            </a>
-
-            <a
-              href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              className={styles.card}
-            >
-              <h3>Deploy &rarr;</h3>
-              <p>
-                Instantly deploy your Next.js site to a public URL with Vercel.
-              </p>
-            </a>
+            <div>
+              <button className={styles.card} onClick={() => props.counter({ type: 'DECREMENT' })}>
+                <p>minus</p>
+              </button>
+              <button className={styles.card} onClick={() => props.counter({ type: 'INCREMENT' })}>
+                <p>plus</p>
+              </button>
+            </div>
+          </div>
+          <div>
+            count is {props.count}
           </div>
         </main>
 
@@ -69,7 +54,20 @@ const Component: React.FC<Props> = props => {
 
 const Container: React.FC<ContainerProps> = props => {
   // 値の取得や、整形、stateの生成などのロジックをContainer内に閉じ込められる
-  return <Component {...props} />
+
+  const initialState: Count = { count: 0 }
+  const reducer = (state: Count, action: CounterAction): Count => {
+    switch (action.type) {
+      case 'INCREMENT':
+        return { count: state.count + 1 }
+      case 'DECREMENT':
+        return { count : state.count - 1 }
+    }
+  }
+
+  const [state, dispatch] = useReducer(reducer, initialState)
+
+  return <Component count={state.count} counter={dispatch} />
 }
 
 Container.displayName = 'Home'
