@@ -10,7 +10,11 @@ type Props = {
 } & ContainerProps
 
 type Count = { count: number }
-type CounterAction = { type: 'INCREMENT' | 'DECREMENT' }
+const CalcType = {
+  INCREMENT: 'INCREMENT',
+  DECREMENT: 'DECREMENT'
+} as const
+type CounterAction = { type: typeof CalcType[keyof typeof CalcType] }
 
 const Component: React.FC<Props> = props => {
   // Component内では渡されたpropsを使うだけ
@@ -24,10 +28,10 @@ const Component: React.FC<Props> = props => {
 
           <div className={styles.grid}>
             <div>
-              <button className={styles.card} onClick={() => props.counter({ type: 'DECREMENT' })}>
+              <button className={styles.card} onClick={() => props.counter({ type: CalcType.DECREMENT })}>
                 <p>minus</p>
               </button>
-              <button className={styles.card} onClick={() => props.counter({ type: 'INCREMENT' })}>
+              <button className={styles.card} onClick={() => props.counter({ type: CalcType.INCREMENT })}>
                 <p>plus</p>
               </button>
             </div>
